@@ -1,4 +1,5 @@
 import requests
+from tkinter import *
 from bs4 import BeautifulSoup
 
 
@@ -14,8 +15,5 @@ links = {}
 for link in soup.find_all('a'):
     for h2 in link.find_all('h2'):
         if "[Intermediate]" in str(h2):
-            #print(h2.prettify())
-            #print("++++++++++++++++++++")
-            #print(link.prettify())
             links[h2] = link
 print(links)
