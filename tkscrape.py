@@ -42,6 +42,7 @@ class Scrape(tk.Tk):
                     new_link.pack(side=tk.TOP, fill=tk.X)
                     self.links.append(new_link)
 
+
 if __name__ == "__main__":
     scraper = Scrape()
     scraper.mainloop()
