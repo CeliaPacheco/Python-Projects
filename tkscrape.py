@@ -46,6 +46,7 @@ class Scrape(tk.Tk):
                     new_link.pack(side=tk.TOP, fill=tk.X)
                     new_link.bind("<Button-1>", self.callback)
 
+
     def get_link(self, link):
         """Get the proper url for the required area"""
         text = "https://www.reddit.com"
