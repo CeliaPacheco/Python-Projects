@@ -19,15 +19,17 @@ class Scrape(tk.Tk):
 
         self.main_frame.pack()
         self.url_label.pack()
-        self.url_entry.pack()
+        self.url_entry.pack(fill=tk.X)
 
         self.bind("<Return>", self.open_url)
 
     def open_url(self, event):
         """Open the entered url to begin scraping"""
         url = self.url_entry.get().strip()
+
         # This header is needed so reddit doesn't get angry
         headers = {'user-agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:60.0) Gecko/20100101 Firefox/60.0'}
+
         # the actual opening of the url
         response = requests.get(url, headers=headers)
         # get the html content
@@ -41,8 +43,8 @@ class Scrape(tk.Tk):
             for h2 in link.find_all('h2'):
                 if "[Intermediate]" in str(h2):
                     # make a new entry with title and the link url
-                    self.links[str(h2)] = self.get_link(link)
-                    new_link = tk.Label(self, text=str(h2), fg="blue", cursor="hand2")
+                    self.links[self.get_title(h2)] = self.get_link(link)
+                    new_link = tk.Label(self, text=self.get_title(h2), fg="blue", cursor="hand2")
                     new_link.pack(side=tk.TOP, fill=tk.X)
                     new_link.bind("<Button-1>", self.callback)
 
@@ -52,10 +54,12 @@ class Scrape(tk.Tk):
         text = "https://www.reddit.com"
         return text + link.get('href')
 
-    #TODO strip h2 to only get title
     def get_title(self, h2):
-        pass
-
+        """Get the title of the link. 
+        This will help in making it look nicer
+        """
+        return h2.get_text()
+        
     def callback(self, event):
         """This will open the clicked on link"""
 
