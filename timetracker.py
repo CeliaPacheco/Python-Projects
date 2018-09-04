@@ -9,7 +9,7 @@ def getArgs(argv=None):
     parser.add_argument('-st', '--start', action='store_true', default=False)
     parser.add_argument('-so', '--stop', action='store_true', default=False)
     parser.add_argument('-p', '--part', action='store')
-    parser.add_argument('-n', '--note', action='store')
+    parser.add_argument('-n', '--note', action='store', default="N/A")
     parser.add_argument('file')
     return parser.parse_args(argv)
 
@@ -24,7 +24,7 @@ def StartLog(file):
         try:
             with open(file, 'a') as f:
                s = d.strftime('%m/%d    %H:%M')
-               f.write("\n"+ s +"   *")
+               f.write("\n"+ s + "\t")
         except IOError as e:
             print(e)
     else:
@@ -32,16 +32,16 @@ def StartLog(file):
             with open(file, 'w+') as f:
                 writeBeginning(f)
                 s = d.strftime('%m/%d    %H:%M')
-                f.write(s + "   *")
+                f.write(s + "\t")
         except IOError as e:
             print(e)
 
 def StopLog(file, part, note):
+    d = datetime.datetime.now()
     try:
-        with open(file, 'a+') as f:
-            #print(f)
-            for line in f:
-                print(line)
+        with open(file, 'a') as f:
+            s = d.strftime('%H:%M   ')
+            f.write(s + "\t" + part + "\t" + note)
             """
             f.readlines(5)
             line = f.readline()
